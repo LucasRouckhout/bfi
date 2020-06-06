@@ -30,19 +30,24 @@ int main(int argc, char **argv) {
 	
 	// Open the file containing the source code.
 	int source_code_fd;
-	if ((source_code_fd = open(argv[1], O_RDONLY)) < 0) handle_error(argv[1]);
+	if ((source_code_fd = open(argv[1], O_RDONLY)) < 0) {
+		handle_error(argv[1]);
+	}
 
 	// Retrieve the size of the source code file.
 	struct stat stats;
-	if (fstat(source_code_fd, &stats) < 0) handle_error(argv[0]);
+	if (fstat(source_code_fd, &stats) < 0) {
+		handle_error(argv[0]); 
+	}
 
 	off_t size = stats.st_size;
 
 	// Read the source code file into memory on the heap.
 	char *begin_of_program = malloc(sizeof(char) * size);
 	ssize_t n_bytes;
-	if ((n_bytes = read(source_code_fd, (void *)begin_of_program, (size_t)size)) < 0)
+	if ((n_bytes = read(source_code_fd, (void *)begin_of_program, size)) < 0) {
 		handle_error(argv[1]);
+	}
 
 	if (n_bytes < size) {
 		close(source_code_fd);
@@ -64,31 +69,24 @@ int main(int argc, char **argv) {
 	while (source_code_ptr != end_of_program) {
 		switch (*source_code_ptr) {
 			case '+':
-				printf("+");
 				++(*ptr);
 				break;
 			case '-':
-				printf("-");
 				--(*ptr);
 				break;
 			case '>':
-				printf(">");
 				++ptr;
 				break;
 			case '<':
-				printf("<");
 				--ptr;
 				break;
 			case '.':
-				printf(".");
 				putchar(*ptr);
 				break;
 			case ',':
-				printf(",");
 				*ptr=getchar();
 				break;
 			case ']':
-				printf("]");
 				if (*ptr != 0) {
 					source_code_ptr = location_stack[TOP_OF_STACK];	
 				} else {
@@ -96,7 +94,6 @@ int main(int argc, char **argv) {
 				}
 				break;
 			case '[':
-				printf("[");
 				if (*ptr == 0) {
 					while (*source_code_ptr != ']') source_code_ptr++;
 				} else {
