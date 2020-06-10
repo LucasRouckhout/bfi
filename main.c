@@ -42,8 +42,8 @@ int main(int argc, char **argv) {
 		exit(EXIT_FAILURE);
 	}
 
+	// TODO: Rewrite interpreter loop.
 	
-
 	close(fd_sc);
 	free((void *) code_buffer);
 	return EXIT_SUCCESS;
