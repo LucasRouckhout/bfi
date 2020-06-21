@@ -1,5 +1,5 @@
 CC=cc
-FLAGS=-Ofast -Wall -Werror -Wshadow
+FLAGS=-Ofast -Wall -Wshadow
 BIN=bfi
 
 

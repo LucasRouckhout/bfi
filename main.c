@@ -15,8 +15,6 @@
 
 #define INIT_MEM_SIZE 1048576 // 1 MiB
 
-void int_loop(char *, char*, stack *);
-
 int main(int argc, char **argv) {
 	if (argc != 2) {
 		printf("Wrong usage expected a source file: bfi <SOURCE_FILE>\n");
@@ -44,21 +42,39 @@ int main(int argc, char **argv) {
 		exit(EXIT_FAILURE);
 	}
 
-	const char *mem_buffer = calloc(INIT_MEM_SIZE, sizeof(char));
-	char *mem_ptr		=	(char *) mem_buffer;
-	char *code_ptr		=	(char *) code_buffer;
+	const int *mem_buffer = calloc(INIT_MEM_SIZE, sizeof(int));
+	int		*mem_ptr		=	(int *) mem_buffer;
+	char	*code_ptr		=	(char *) code_buffer;
 	stack code_stack;
 	sinit(&code_stack);
 	
-	int_loop(mem_ptr, code_ptr, &code_stack);
+	while(code_ptr != (code_buffer + file_stat.st_size)) {
+		switch (*code_ptr) {
+			case '>':
+				++mem_ptr;
+				break;
+			case '<':
+				--mem_ptr;
+				break;
+			case '+':
+				++*mem_ptr;
+				break;
+			case '-':
+				--*mem_ptr;
+				break;
+			case '.':
+				putchar(*mem_ptr);
+				break;
+			case ',':
+				*mem_ptr = getchar();
+				break;
+		}
+		code_ptr++;
+	}
 	
 	close(fd_sc);
 	sdelete(&code_stack);	
 	free((void *) mem_buffer);
 	free((void *) code_buffer);
 	return EXIT_SUCCESS;
-}
-
-void int_loop(char *mem_ptr, char *code_ptr, stack *s) {
-	
 }
