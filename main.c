@@ -11,17 +11,9 @@
 #include <sys/types.h>
 #include <sys/uio.h>
 #include <unistd.h>
+#include "stack.h"
 
 #define INIT_MEM_SIZE 1048576 // 1 MiB
-#define STACK_SIZE 1000
-
-typedef struct {
-	const char	*bottom;
-	char		*top;
-} stack;
-
-stack *init_stack();
-void free_stack(stack *);
 
 void int_loop(char *, char*, stack *);
 
@@ -55,36 +47,18 @@ int main(int argc, char **argv) {
 	const char *mem_buffer = calloc(INIT_MEM_SIZE, sizeof(char));
 	char *mem_ptr		=	(char *) mem_buffer;
 	char *code_ptr		=	(char *) code_buffer;
-	stack *code_stack	=	init_stack();
+	stack code_stack;
+	sinit(&code_stack);
 	
-	int_loop(mem_ptr, code_ptr, code_stack);
+	int_loop(mem_ptr, code_ptr, &code_stack);
 	
 	close(fd_sc);
-	free_stack(code_stack);	
+	sdelete(&code_stack);	
 	free((void *) mem_buffer);
 	free((void *) code_buffer);
 	return EXIT_SUCCESS;
 }
 
-stack *init_stack() {
-	stack *st = malloc(sizeof(stack));	
-	st->bottom = calloc(STACK_SIZE, sizeof(char));
-	st->top = (char *) st->bottom;
-	return st;
-}
-
-void free_stack(stack *st) {
-	free((void *) st->bottom);
-	free(st);
-}
-
-void int_loop(char *mem_ptr, char *code_ptr, stack *code_stack) {
-    switch (*code_ptr) {
-        case '+':
-            *
-            break;
-            
-        default:
-            break;
-    }
+void int_loop(char *mem_ptr, char *code_ptr, stack *s) {
+	
 }
