@@ -5,6 +5,8 @@ A POSIX compliant brainfuck interpreter.
 Currently has no dynamic memory realoccation so if you go above the alloted 1 MiB of memory 
 you will segfault.
 
+This interpreter is not finished yet. There are still some bugs.
+
 # Installing
 
 Start by compiling the binary.
