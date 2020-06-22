@@ -43,8 +43,8 @@ int main(int argc, char **argv) {
 	}
 
 	const int *mem_buffer = calloc(INIT_MEM_SIZE, sizeof(int));
-	int		*mem_ptr		=	(int *) mem_buffer;
-	char	*code_ptr		=	(char *) code_buffer;
+	int		*mem_ptr	=	(int *) mem_buffer;
+	char	*code_ptr	=	(char *) code_buffer;
 	stack code_stack;
 	sinit(&code_stack);
 	
