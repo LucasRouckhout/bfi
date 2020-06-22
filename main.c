@@ -51,6 +51,7 @@ int main(int argc, char **argv) {
 	while(code_ptr != (code_buffer + file_stat.st_size)) {
 		switch (*code_ptr) {
 			case '>':
+				// TODO: Dynamic memory resize with realloc.
 				++mem_ptr;
 				break;
 			case '<':
@@ -67,6 +68,27 @@ int main(int argc, char **argv) {
 				break;
 			case ',':
 				*mem_ptr = getchar();
+				break;
+			case '[':
+				push(&code_stack, code_ptr);	
+
+				if (*mem_ptr == 0) {
+					while (top(&code_stack) != NULL) {
+						code_ptr++;
+
+						if (*code_ptr == '[') {
+							push(&code_stack, code_ptr);
+						} 
+						if (*code_ptr == ']') {
+							pop(&code_stack);
+						}
+					}
+				}
+				break;
+			case ']':
+				if (*mem_ptr != 0) {
+					code_ptr = top(&code_stack);
+				}
 				break;
 		}
 		code_ptr++;

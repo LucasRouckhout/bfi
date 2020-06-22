@@ -8,7 +8,7 @@
 #define INIT_ALLOC 20
 
 typedef struct {
-	char *elements;
+	char **elements;
 	size_t length;
 	size_t alloc_length;
 } stack;
@@ -17,8 +17,10 @@ void sinit(stack *);
 
 void sdelete(stack *);
 
-void push(stack *, char);
+void push(stack *, char *);
 
-char pop(stack *);
+char *pop(stack *);
+
+char *top(stack *);
 
 #endif // _STACK_H_

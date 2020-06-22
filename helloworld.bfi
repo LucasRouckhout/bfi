@@ -1,0 +1,5 @@
+[
+	This is a top line comment. The interpreter can currently correctly interpret this piece of code as 
+	printing out hello world. On other examples it still segfaults.
+] 
+++++++++++[>+++++++>++++++++++>+++>+<<<<-]>++.>+.+++++++..+++.>++.<<+++++++++++++++.>.+++.------.--------.>+.>.
